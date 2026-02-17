@@ -15,24 +15,25 @@ class UsersService:
 
     def __init__(self, repository : IUsersRepository) -> None:
         self._repository = repository
-        self._users: list[UserModel] = self._repository.list_users()
-
+        
     def list_users(self) -> list[UserModel]:
-        return list(self._users)
+        return list(self._repository.list_users())
 
     def get_user_by_id(self, user_id: int) -> UserModel | None:
-        for u in self._users:
+        for u in self._repository.list_users():
             if u.id == user_id:
                 return u
         return None
 
     def create_user(self, payload: UserModelCreate) -> UserModel:
-        next_id = max((u.id for u in self._users), default=0) + 1
+        next_id = max((u.id for u in self._repository.list_users()), default=0) + 1
 
         created = UserModel(
             id=next_id,
             login=payload.login,
             age=payload.age,
         )
-        self._users.append(created)
+
+        self._repository.create_user(UserModelCreate(login=created.login, age=created.age))
+
         return created

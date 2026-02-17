@@ -9,7 +9,7 @@ class FakeUsersRepository(IUsersRepository):
     def __init__(self, factory: UsersFactory, json_path: str) -> None:
         self._factory = factory
         self._json_path = json_path
-        self._service = UsersService(factory, json_path)
+        self._service = UsersService(repository=self)
 
     def list_users(self) -> list[UserModel]:
         return self._service.list_users()
