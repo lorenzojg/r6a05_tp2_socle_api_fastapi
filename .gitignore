@@ -1,0 +1,9 @@
+# Environnements / caches
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Fichiers locaux
+.env
