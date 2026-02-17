@@ -5,8 +5,11 @@ from app.services.users_service import UsersService
 from app.api.routers.users_router import get_users_service
 
 
-class UsersRepositoryFake(IUsersRepository):
+class FakeUsersRepository(IUsersRepository):
     """Implémentation de IUsersRepository pour les tests."""
+    def __init__(self, factory: UsersFactory, json_path: str) -> None:
+        self._factory = factory
+        self._json_path = json_path
 
     def list_users(self) -> list[UserModel]:
         return get_users_service().list_users()
