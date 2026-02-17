@@ -10,12 +10,13 @@ class FakeUsersRepository(IUsersRepository):
     def __init__(self, factory: UsersFactory, json_path: str) -> None:
         self._factory = factory
         self._json_path = json_path
+        self._service = UsersService(factory, json_path)
 
     def list_users(self) -> list[UserModel]:
-        return get_users_service().list_users()
+        return self._service.list_users()
     
     def get_user_by_id(self, user_id: int):
-        return get_users_service().get_user_by_id(user_id)
+        return self._service.get_user_by_id(user_id)
 
     def create_user(self, user):
-        return get_users_service().create_user(user)
+        return self._service.create_user(user)
