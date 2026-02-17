@@ -2,7 +2,6 @@ from .protocols.IUsersRepository import IUsersRepository
 from app.models.user_model import UserModel
 from app.factories.users_factory import UsersFactory
 from app.services.users_service import UsersService
-from app.api.routers.users_router import get_users_service
 
 
 class FakeUsersRepository(IUsersRepository):

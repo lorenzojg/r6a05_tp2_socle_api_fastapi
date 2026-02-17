@@ -1,9 +1,8 @@
 from __future__ import annotations
 
-from app.factories.users_factory_protocol import IUsersFactory
 from app.models.user_model import UserModel
 from app.models.user_model_create import UserModelCreate
-
+from app.repositories.protocols.IUsersRepository import IUsersRepository
 
 class UsersService:
     """
@@ -14,9 +13,9 @@ class UsersService:
     - persistance en mémoire (volontairement simple)
     """
 
-    def __init__(self, factory: IUsersFactory, users_json_path: str) -> None:
-        self._factory = factory
-        self._users: list[UserModel] = factory.create_users(users_json_path)
+    def __init__(self, repository : IUsersRepository) -> None:
+        self._repository = repository
+        self._users: list[UserModel] = self._repository.list_users()
 
     def list_users(self) -> list[UserModel]:
         return list(self._users)
