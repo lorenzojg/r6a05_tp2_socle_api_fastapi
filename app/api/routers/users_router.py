@@ -6,6 +6,7 @@ from app.core.settings import Settings
 from app.factories.users_factory import UsersFactory
 from app.models.user_model import UserModel
 from app.models.user_model_create import UserModelCreate
+from app.repositories.users_repository_fake import FakeUsersRepository
 from app.services.users_service import UsersService
 
 
@@ -15,11 +16,12 @@ router = APIRouter(prefix="/users", tags=["users"])
 def get_users_service() -> UsersService:
     """
     Dépendance simple (TP) :
-    instancie Settings + Factory + Service.
+    instancie Settings + Factory + Repository + Service.
     """
     settings = Settings()
     factory = UsersFactory()
-    return UsersService(factory=factory, users_json_path=settings.users_json_path)
+    repository = FakeUsersRepository(factory=factory, json_path=settings.users_json_path)
+    return UsersService(repository=repository)
 
 
 @router.get("", response_model=list[UserModel])
