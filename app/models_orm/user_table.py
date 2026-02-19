@@ -6,11 +6,12 @@ from sqlalchemy.orm import Mapped, mapped_column
 from app.db.base import Base
 
 
-class UserTable:
+class UserTable(Base):
     """
     Table ORM représentant l'entité User en base.
     """
+    __tablename__ = "users"
 
-    id: Mapped[int] = mapped_column(autoincrement=True)
-    login: Mapped[str] = mapped_column( unique=True, nullable=False)
-    age: Mapped[int] = mapped_column(nullable=False)
+    id: Mapped[int] = mapped_column(Integer, primary_key=True, autoincrement=True)
+    login: Mapped[str] = mapped_column(String, unique=True, nullable=False)
+    age: Mapped[int] = mapped_column(Integer, nullable=False)
